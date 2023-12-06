@@ -19,7 +19,7 @@ public class EmployeePayroll {
     }
 
     public List<Employee> employeePayrollList;
-    private static final String FILE_PATH = "employee_payroll.txt";
+    public static final String FILE_PATH = "employee_payroll.txt";
 
     public EmployeePayroll() {
         this.employeePayrollList = new ArrayList<>();
