@@ -1,6 +1,8 @@
 package com.employee;
 
-public class Employee {
+import java.io.Serializable;
+
+public class Employee implements Serializable{
     private int emp_id;
     private String name;
     private double salary;

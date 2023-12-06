@@ -1,10 +1,16 @@
 package com.employee;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class EmployeePayroll {
-    public enum IOService{
+
+    public enum IOService {
         CONSOLE_IO,
         FILE_IO,
         DB_IO,
@@ -12,23 +18,46 @@ public class EmployeePayroll {
     }
 
     public List<Employee> employeePayrollList;
+    private static final String FILE_PATH = "employee_payroll.txt";
 
-    public EmployeePayroll(List<Employee> employeePayrollList){
-        this.employeePayrollList = employeePayrollList;
+    public EmployeePayroll() {
+        this.employeePayrollList = new ArrayList<>();
     }
 
-    public void readPayrollDetails(Scanner sc){
-        System.out.println("Enter employee id"); 
-        int id = sc.nextInt();
-        System.out.println("Enter employee name :");
-        String name = sc.next();
-        System.out.println("Enter employee salary: ");
-        double salary = sc.nextDouble();
-        employeePayrollList.add(new Employee(id, name, salary));
+    public void addEmployee(Employee employee) {
+        employeePayrollList.add(employee);
     }
 
-    public void writePayrollDetails() {
-        System.out.println("\nWriting Employee Payroll to Console\n"+ employeePayrollList);
+    public void writeToFile() {
+        try (ObjectOutputStream objectStream = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
+            //objectStream.writeObject(employeePayrollList);
+            for (Employee employee : employeePayrollList) {
+                String formattedEmployee = employee.toString();
+                System.out.println(formattedEmployee); // Print to console
+                objectStream.writeObject(formattedEmployee); // Write to file
+            }
+            System.out.println("Employee payroll data written to file succesfully");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void readFromFile() {
+        try (ObjectInputStream objectInput = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
+            Object ob = objectInput.readObject();
+            if (ob instanceof List) {
+                employeePayrollList = (List<Employee>) ob;
+                System.out.println("Employee Payroll data read from file successfully.");
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void displayEmployeePayroll() {
+        System.out.println("Employee Payroll Details:");
+        for (Employee employee : employeePayrollList) {
+            System.out.println(employee);
+        }
     }
 }
-
