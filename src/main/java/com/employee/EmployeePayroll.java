@@ -1,5 +1,6 @@
 package com.employee;
 
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -33,7 +34,7 @@ public class EmployeePayroll {
             //objectStream.writeObject(employeePayrollList);
             for (Employee employee : employeePayrollList) {
                 String formattedEmployee = employee.toString();
-                System.out.println(formattedEmployee); // Print to console
+
                 objectStream.writeObject(formattedEmployee); // Write to file
             }
             System.out.println("Employee payroll data written to file succesfully");
@@ -59,5 +60,27 @@ public class EmployeePayroll {
         for (Employee employee : employeePayrollList) {
             System.out.println(employee);
         }
+    }
+
+    public int numberEntries(){
+        //System.out.println("Numbe of entries in the file :"+ employeePayrollList.size());
+        int count =0;
+        try(ObjectInputStream objectStream = new ObjectInputStream(new FileInputStream(FILE_PATH))){
+            // while(objectStream.readObject() != null){
+            //     count++;
+            // }
+            while (true) {
+                try {
+                    objectStream.readObject();
+                    count++;
+                } catch (EOFException e) {
+                    // End of file reached
+                    break;
+                }
+            }
+        }catch(IOException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return count;
     }
 }
