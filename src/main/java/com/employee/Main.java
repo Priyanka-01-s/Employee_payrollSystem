@@ -1,6 +1,4 @@
 package com.employee;
-
-import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -52,6 +50,9 @@ public class Main {
         } catch (PayrollServiceException | SQLException | java.text.ParseException e) {
             e.printStackTrace();
         }
+        System.out.println("\n-----------SALARY ANALYSIS ON BASIS OF GENDER--------------\n");
+        jdbc.genderSalaryAnalysis();
 
     }
+
 }

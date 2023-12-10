@@ -117,7 +117,40 @@ public class EmployeeJdbc {
         return employees;
     }
 
+    public void genderSalaryAnalysis() throws SQLException, PayrollServiceException {
+        try (Connection connection = getConnectivityTest()) {
+            String query = "SELECT GENDER, SUM(SALARY) AS TOTAL_SALARY, AVG(SALARY) AS AVG_SALARY, " +
+                    "MIN(SALARY) AS MIN_SALARY, " +
+                    "MAX(SALARY) AS MAX_SALARY, " +
+                    "COUNT(*) AS EMPLOYEE_COUNT " +
+                    "FROM EMPLOYEE_PAYROLL_DB " +
+                    "GROUP BY GENDER";
+
+            try (Statement statement = connection.createStatement();
+                 ResultSet resSet = statement.executeQuery(query)) {
+                while (resSet.next()) {
+                    String gender = resSet.getString("GENDER");
+                    double totalSalary = resSet.getDouble("TOTAL_SALARY");
+                    double avgSalary = resSet.getDouble("AVG_SALARY");
+                    double minSalary = resSet.getDouble("MIN_SALARY");
+                    double maxSalary = resSet.getDouble("MAX_SALARY");
+                    int employeeCount = resSet.getInt("EMPLOYEE_COUNT");
+
+                    System.out.println("Gender: " + gender);
+                    System.out.println("Total Salary: " + totalSalary);
+                    System.out.println("Average Salary: " + avgSalary);
+                    System.out.println("Minimum Salary: " + minSalary);
+                    System.out.println("Maximum Salary: " + maxSalary);
+                    System.out.println("Number of Employees: " + employeeCount);
+                    System.out.println("----------------------------");
+                }
+            }
+        }
+    }
+
 }
+
+
 
 class PayrollServiceException extends Exception {
     public PayrollServiceException(String message) {
