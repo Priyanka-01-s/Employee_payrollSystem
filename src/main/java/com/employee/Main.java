@@ -1,45 +1,49 @@
 package com.employee;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         System.out.println("--------WELCOME TO EMPLOYEE PAYROLL SYSTEM------------");
 
-		Scanner scanner=new Scanner(System.in);
-        EmployeePayroll employeePayroll = new EmployeePayroll();
+		// Scanner scanner=new Scanner(System.in);
+        // EmployeePayroll employeePayroll = new EmployeePayroll();
 
-        boolean addEmployees = true;
+        // boolean addEmployees = true;
 
-        do{
-             System.out.print("Enter Employee ID: ");
-        int empId = scanner.nextInt();
+        // do{
+        //      System.out.print("Enter Employee ID: ");
+        // int empId = scanner.nextInt();
 
-        System.out.print("Enter Employee Name: ");
-        String empName = scanner.next();
+        // System.out.print("Enter Employee Name: ");
+        // String empName = scanner.next();
 
-        System.out.print("Enter Employee Salary: ");
-        double empSalary = scanner.nextDouble();
+        // System.out.print("Enter Employee Salary: ");
+        // double empSalary = scanner.nextDouble();
 
-        Employee employee = new Employee(empId, empName, empSalary);
-        employeePayroll.addEmployee(employee);
+        // Employee employee = new Employee(empId, empName, empSalary);
+        // employeePayroll.addEmployee(employee);
 
-        System.out.println("\nDo you want to continue adding employees? (yes/no): ");
-        String input = scanner.next().toLowerCase();
-        addEmployees = input.equals("yes");
+        // System.out.println("\nDo you want to continue adding employees? (yes/no): ");
+        // String input = scanner.next().toLowerCase();
+        // addEmployees = input.equals("yes");
 
-        }while(addEmployees);             
+        // }while(addEmployees);             
 
-        employeePayroll.writeToFile();
+        // employeePayroll.writeToFile();
 
-        employeePayroll.readFromFile();
+        // employeePayroll.readFromFile();
 
-        employeePayroll.displayEmployeePayroll();
+        // employeePayroll.displayEmployeePayroll();
 
-        int numberOfEntries = employeePayroll.numberEntries();
-        System.out.println("Number of Entries in the File: " + numberOfEntries);
+        // int numberOfEntries = employeePayroll.numberEntries();
+        // System.out.println("Number of Entries in the File: " + numberOfEntries);
 
-        scanner.close();
+       // scanner.close();
+
+       EmployeeJdbc jdbc = new EmployeeJdbc();
+       jdbc.getConnectivityTest();
 
     }
 }
