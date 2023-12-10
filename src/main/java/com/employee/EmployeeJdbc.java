@@ -3,15 +3,16 @@ package com.employee;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.sql.*;
 
 public class EmployeeJdbc {
 
+    //uc1 : for connection of database
     public Connection getConnectivityTest() throws SQLException {
         String jdbcUrl = "jdbc:mysql://localhost:3306/payroll_service";
         String username = "root";
@@ -39,10 +40,20 @@ public class EmployeeJdbc {
                     String name = resSet.getString("NAME");
                     double salary = resSet.getDouble("SALARY");
                     Date startDate = resSet.getDate("START_DATE");
+                    String phone = resSet.getString("PHONE");
+                    String gender = resSet.getString("GENDER");
+                    String department = resSet.getString("DEPARTMENT");
+                    String basic_pay = resSet.getString("BASIC_PAY");
+                    String deductions = resSet.getString("DEDUCTIONS");
+                    String tax_pay = resSet.getString("TAXABLE_PAY");
+                    String income_tax = resSet.getString("INCOME_TAX");
+                    String net_pay = resSet.getString("NET_PAY");
+                    
 
                     //create an EmployeePayroll object and add it to the list
-                    Employee employeePayroll = new Employee(id, name, salary, startDate);
-                    employees.add(employeePayroll);
+                    Employee employee = new Employee(id, name, gender, salary, startDate, phone, department,
+                            basic_pay, deductions, tax_pay, income_tax, net_pay);
+                    employees.add(employee);
 
                 }
 
@@ -52,6 +63,21 @@ public class EmployeeJdbc {
             return employees;
         }
 
+    }
+
+    //uc3 - update values in db
+    public void updatePayrollSalary(String name, double salary) throws SQLException, PayrollServiceException{
+        try(Connection connection = getConnectivityTest()){
+            String updatequery = String.format("UPDATE EMPLOYEE_PAYROLL_DB SET SALARY = %.2f WHERE NAME = ?",salary);
+            try(PreparedStatement preparedStatement = connection.prepareStatement(updatequery)){
+                preparedStatement.setString(1, name);
+                int rows = preparedStatement.executeUpdate();
+
+                if(rows == 0){
+                    System.out.println("Employee not found in the database!!!!");
+                }
+            }
+        }
     }
 
 }

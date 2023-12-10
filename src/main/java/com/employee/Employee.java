@@ -6,33 +6,136 @@ import java.util.Date;
 public class Employee implements Serializable{
     private int emp_id;
     private String name;
+    private String gender;
     private double salary;
     private Date startDate;
+    private String phone;
+    private String department;
+    private String basic_pay;
+    private String deductions;
+    private String tax_pay;
+    private String income_tax;
+    private String net_pay;
 
-    public Employee(int emp_id, String name, double salary,Date startDate){
+    public Employee(int emp_id, String name, String gender, double salary, Date startDate, String phone,
+                    String department, String basic_pay, String deductions, String tax_pay, String income_tax, String net_pay) {
         this.emp_id = emp_id;
         this.name = name;
+        this.gender = gender;
         this.salary = salary;
         this.startDate = startDate;
+        this.phone = phone;
+        this.department = department;
+        this.basic_pay = basic_pay;
+        this.deductions = deductions;
+        this.tax_pay = tax_pay;
+        this.income_tax = income_tax;
+        this.net_pay = net_pay;
     }
 
-    //getter
-    public int getEmpId(){
+    public int getEmpId() {
         return emp_id;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    public double getSalary(){
+
+    public String getGender() {
+        return gender;
+    }
+
+    public double getSalary() {
         return salary;
     }
-    public Date getdate(){
+
+    public Date getStartDate() {
         return startDate;
     }
 
-    @Override
-    public String toString(){
-        return "Employee-id :"+emp_id+ " Name :"+name+ " Salary :"+salary+"Start_date :"+startDate+"\n";
-    } 
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public String getBasicPay() {
+        return basic_pay;
+    }
+
+    public String getDeductions() {
+        return deductions;
+    }
+
+    public String getTaxPay() {
+        return tax_pay;
+    }
+
+    public String getIncomeTax() {
+        return income_tax;
+    }
+
+    public String getNetPay() {
+        return net_pay;
+    }
+
+    // Setter methods (assuming you need setters for these fields)
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public void setBasicPay(String basic_pay) {
+        this.basic_pay = basic_pay;
+    }
+
+    public void setDeductions(String deductions) {
+        this.deductions = deductions;
+    }
+
+    public void setTaxPay(String tax_pay) {
+        this.tax_pay = tax_pay;
+    }
+
+    public void setIncomeTax(String income_tax) {
+        this.income_tax = income_tax;
+    }
+
+    public void setNetPay(String net_pay) {
+        this.net_pay = net_pay;
+    }
+
+    public String toString() {
+        return String.format("Employee Details%n" +
+                "----------------------------------------%n" +
+                "Employee ID: %d%n" +
+                "Name: %s%n" +
+                "Gender: %s%n" +
+                "Salary: %.2f%n" +
+                "Start Date: %s%n" +
+                "Phone: %s%n" +
+                "Department: %s%n" +
+                "Basic Pay: %s%n" +
+                "Deductions: %s%n" +
+                "Tax Pay: %s%n" +
+                "Income Tax: %s%n" +
+                "Net Pay: %s%n" +
+                "----------------------------------------%n",
+                emp_id, name, gender, salary, startDate, phone, department,
+                basic_pay, deductions, tax_pay, income_tax, net_pay);
+
+        
+   
+
+    }
     
 }
