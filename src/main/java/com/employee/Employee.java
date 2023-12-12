@@ -82,6 +82,9 @@ public class Employee implements Serializable{
     }
 
     // Setter methods (assuming you need setters for these fields)
+    public void setEmpId(int emp_id){
+        this.emp_id =emp_id;
+    }
     public void setGender(String gender) {
         this.gender = gender;
     }
@@ -114,6 +117,13 @@ public class Employee implements Serializable{
         this.net_pay = net_pay;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setStartDate(Date date) {
+        this.startDate = startDate;
+    }
+
     public String toString() {
         return String.format("Employee Details%n" +
                 "----------------------------------------%n" +
@@ -137,5 +147,7 @@ public class Employee implements Serializable{
    
 
     }
+
+    
     
 }

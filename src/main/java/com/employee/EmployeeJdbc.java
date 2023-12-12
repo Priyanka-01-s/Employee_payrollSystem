@@ -79,6 +79,7 @@ public class EmployeeJdbc {
         }
     }
 
+    // uc5 : get values by a date range
     public List<Employee> getPayrollDataByDateRange(Date startDate, Date endDate)
             throws SQLException, PayrollServiceException {
         List<Employee> employees = new ArrayList<>();
@@ -117,6 +118,7 @@ public class EmployeeJdbc {
         return employees;
     }
 
+    // uc6 : get salary infights based on gender
     public void genderSalaryAnalysis() throws SQLException, PayrollServiceException {
         try (Connection connection = getConnectivityTest()) {
             String query = "SELECT GENDER, SUM(SALARY) AS TOTAL_SALARY, AVG(SALARY) AS AVG_SALARY, " +
@@ -127,7 +129,7 @@ public class EmployeeJdbc {
                     "GROUP BY GENDER";
 
             try (Statement statement = connection.createStatement();
-                 ResultSet resSet = statement.executeQuery(query)) {
+                    ResultSet resSet = statement.executeQuery(query)) {
                 while (resSet.next()) {
                     String gender = resSet.getString("GENDER");
                     double totalSalary = resSet.getDouble("TOTAL_SALARY");
@@ -148,12 +150,48 @@ public class EmployeeJdbc {
         }
     }
 
-}
+    // UC_7 : Ability to add a new Employee to the Payroll
 
-
-
-class PayrollServiceException extends Exception {
-    public PayrollServiceException(String message) {
-        super(message);
+    public void addEmployee(Employee newEmployee) throws SQLException, PayrollServiceException {
+        try (Connection connection = getConnectivityTest()) {
+            // SQL Insert Query
+            String insertQuery = "INSERT INTO EMPLOYEE_PAYROLL_DB (NAME, GENDER, SALARY, START_DATE, PHONE, DEPARTMENT, BASIC_PAY, DEDUCTIONS, TAXABLE_PAY, INCOME_TAX, NET_PAY) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
+                // Setting Parameters in the Prepared Statement
+                preparedStatement.setString(1, newEmployee.getName());
+                preparedStatement.setString(2, newEmployee.getGender());
+                preparedStatement.setDouble(3, newEmployee.getSalary());
+                preparedStatement.setDate(4, new java.sql.Date(newEmployee.getStartDate().getTime()));
+                preparedStatement.setString(5, newEmployee.getPhone());
+                preparedStatement.setString(6, newEmployee.getDepartment());
+                preparedStatement.setString(7, newEmployee.getBasicPay());
+                preparedStatement.setString(8, newEmployee.getDeductions());
+                preparedStatement.setString(9, newEmployee.getTaxPay());
+                preparedStatement.setString(10, newEmployee.getIncomeTax());
+                preparedStatement.setString(11, newEmployee.getNetPay());
+    
+                // Execute Update
+                int rowsAffected = preparedStatement.executeUpdate();
+    
+                // Handle Results
+                if (rowsAffected == 1) {
+                    ResultSet generateKeys = preparedStatement.getGeneratedKeys();
+                    if (generateKeys.next()) {
+                        int empId = generateKeys.getInt(1);
+                        newEmployee.setEmpId(empId);
+                        System.out.println("Employee added successfully to the database!");
+                    } else {
+                        System.out.println("Failed to retrieve EMP_ID after adding employee!");
+                    }
+                } else {
+                    System.out.println("Failed to add employee to the database!");
+                }
+            }
+        } catch (SQLException e) {
+            // Exception Handling
+            throw new PayrollServiceException("Error adding employee to the database: " + e.getMessage());
+        }
     }
 }

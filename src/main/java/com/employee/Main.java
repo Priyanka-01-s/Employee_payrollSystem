@@ -1,7 +1,9 @@
 package com.employee;
+
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Date;
 
 public class Main {
     public static void main(String[] args) throws SQLException, PayrollServiceException, java.text.ParseException {
@@ -39,11 +41,10 @@ public class Main {
             java.sql.Date sqlStartDate = java.sql.Date.valueOf(dateFormat.format(startDate));
             java.sql.Date sqlEndDate = java.sql.Date.valueOf(dateFormat.format(endDate));
 
-            // Retrieve employees in the specified date range
             List<Employee> employeesInDateRange = jdbc.getPayrollDataByDateRange(sqlStartDate, sqlEndDate);
             System.out.println("---------------------EMPLOYEEE FROM " + sqlStartDate + " TO " + sqlEndDate
                     + "----------------------\n");
-            // Process the list of employees
+
             for (Employee employee : employeesInDateRange) {
                 System.out.println(employee);
             }
@@ -53,6 +54,15 @@ public class Main {
         System.out.println("\n-----------SALARY ANALYSIS ON BASIS OF GENDER--------------\n");
         jdbc.genderSalaryAnalysis();
 
+        Employee newEmployee = new Employee(0, "Amit", "M", 50000.00, new Date(), "1234567890", "IT",
+                "40000.00", "5000.00", "35000.00", "7000.00", "28000.00");
+        jdbc.addEmployee(newEmployee);
+
+        System.out.println("-----------UPDATED EMPLOYEES----------------");
+            List<Employee> finalEmployeePayrolls = jdbc.getPayrollData();
+            for (Employee employee : finalEmployeePayrolls) {
+                System.out.println(employee);
+            }
     }
 
 }
