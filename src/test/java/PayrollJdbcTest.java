@@ -18,7 +18,6 @@ public class PayrollJdbcTest {
 
     public void testAddEmployee(){
         try {
-            // Assuming you have an instance of EmployeeJdbc
             EmployeeJdbc jdbc = new EmployeeJdbc();
 
             // Creating a new Employee object
