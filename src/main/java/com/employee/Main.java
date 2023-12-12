@@ -18,12 +18,13 @@ public class Main {
 
             while (true) {
                 System.out.println("\nChoose an option:");
-                System.out.println("1. View all employees");
+                System.out.println("1. View all employees in the database");
                 System.out.println("2. Update salary for an employee");
                 System.out.println("3. View employees in a date range");
-                System.out.println("4. Add a new employee");
+                System.out.println("4. Add a new employee details to database");
                 System.out.println("5. View salary analysis based on gender");
-                System.out.println("6. Exit");
+                System.out.println("6. Remove a employee details from database");
+                System.out.println("7. Exit");
                 System.out.print("Enter your choice: ");
 
                 int choice = scanner.nextInt();
@@ -46,6 +47,9 @@ public class Main {
                         viewSalaryAnalysis(jdbc);
                         break;
                     case 6:
+                        deleleEmployee(jdbc, scanner);
+                        break;
+                    case 7:
                         System.out.println("Exiting...");
                         System.exit(0);
                     default:
@@ -163,6 +167,17 @@ public class Main {
             System.out.println("\n-----------SALARY ANALYSIS ON BASIS OF GENDER--------------\n");
             jdbc.genderSalaryAnalysis();
         } catch (SQLException | PayrollServiceException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void deleleEmployee(EmployeeJdbc jdbc, Scanner sc){
+
+        try{
+            System.out.println("Enter the employee ID to remove:");
+            int empIdRem = sc.nextInt();
+            jdbc.removeEmployee(empIdRem);
+        }catch (SQLException | PayrollServiceException e) {
             e.printStackTrace();
         }
     }

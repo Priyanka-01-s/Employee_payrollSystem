@@ -32,7 +32,7 @@ public class EmployeeJdbc {
         List<Employee> employees = new ArrayList<>();
 
         try (Connection connection = getConnectivityTest()) {
-            String query = "SELECT * FROM COMBINED_EMPLOYEEPAYROLL";
+            String query = "SELECT * FROM COMBINED_EMPLOYEEPAYROLL WHERE IS_ACTIVE = true";
             try (Statement statement = connection.createStatement();
                     ResultSet resSet = statement.executeQuery(query)) {
                 while (resSet.next()) {
@@ -263,6 +263,23 @@ public class EmployeeJdbc {
             }
         }
     }
+
+    public void removeEmployee(int empId) throws SQLException, PayrollServiceException {
+        try (Connection connection = getConnectivityTest()) {
+            String updateQuery = "UPDATE COMBINED_EMPLOYEEPAYROLL SET IS_ACTIVE = false WHERE employee_id = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+                preparedStatement.setInt(1, empId);
+                int rows = preparedStatement.executeUpdate();
+    
+                if (rows == 0) {
+                    System.out.println("Employee not found in the database!");
+                } else {
+                    System.out.println("Employee removed successfully from the payroll!");
+                }
+            }
+        }
+    }
+    
     
 
 }

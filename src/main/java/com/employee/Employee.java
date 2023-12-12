@@ -16,6 +16,8 @@ public class Employee implements Serializable{
     private String tax_pay;
     private String income_tax;
     private String net_pay;
+     private boolean is_active;
+
 
     public Employee(int emp_id, String name, String gender, double salary, Date startDate, String phone,
                     String department, String basic_pay, String deductions, String tax_pay, String income_tax, String net_pay) {
@@ -31,6 +33,7 @@ public class Employee implements Serializable{
         this.tax_pay = tax_pay;
         this.income_tax = income_tax;
         this.net_pay = net_pay;
+        this.is_active = true;
     }
 
     public int getEmpId() {
@@ -96,6 +99,10 @@ public class Employee implements Serializable{
         return salary - getIncomeTax();
     }
 
+    public boolean isActive() {
+        return is_active;
+    }
+
     // Setter methods (assuming you need setters for these fields)
     public void setEmpId(int emp_id){
         this.emp_id =emp_id;
@@ -138,6 +145,12 @@ public class Employee implements Serializable{
     public void setStartDate(Date date) {
         this.startDate = startDate;
     }
+
+    
+    public void setActive(boolean is_active) {
+        this.is_active = is_active;
+    }
+
 
     public String toString() {
         return String.format("Employee Details%n" +
