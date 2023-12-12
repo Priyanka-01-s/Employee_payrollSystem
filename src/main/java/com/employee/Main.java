@@ -56,13 +56,25 @@ public class Main {
 
         Employee newEmployee = new Employee(0, "Amit", "M", 50000.00, new Date(), "1234567890", "IT",
                 "40000.00", "5000.00", "35000.00", "7000.00", "28000.00");
-        jdbc.addEmployee(newEmployee);
+        // jdbc.addEmployee(newEmployee);
 
-        System.out.println("-----------UPDATED EMPLOYEES----------------");
-            List<Employee> finalEmployeePayrolls = jdbc.getPayrollData();
-            for (Employee employee : finalEmployeePayrolls) {
-                System.out.println(employee);
+        // System.out.println("-----------UPDATED EMPLOYEES----------------");
+        //     List<Employee> finalEmployeePayrolls = jdbc.getPayrollData();
+        //     for (Employee employee : finalEmployeePayrolls) {
+        //         System.out.println(employee);
+        //     }
+
+        try {
+            jdbc.addEmployee(newEmployee);
+    
+            System.out.println("\n-----------UPDATED EMPLOYEES----------------\n");
+            List<Employee> updatedEmployeePayrolls = jdbc.getPayrollData();
+            for (Employee updatedEmployee : updatedEmployeePayrolls) {
+                System.out.println(updatedEmployee);
             }
+        } catch (SQLException | PayrollServiceException e) {
+            e.printStackTrace();
+        }
     }
 
 }

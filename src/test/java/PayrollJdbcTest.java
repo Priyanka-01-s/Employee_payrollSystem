@@ -28,11 +28,10 @@ public class PayrollJdbcTest {
             // Adding the new employee to the database
             jdbc.addEmployee(newEmployee);
 
-            // Retrieving the employee from the database
+            //retrieving the employee from the database
             List<Employee> employees = jdbc.getPayrollData();
             Employee retrievedEmployee = null;
 
-            // Finding the added employee from the list
             for (Employee employee : employees) {
                 if (employee.getName().equals("Amit")) {
                     retrievedEmployee = employee;
@@ -40,14 +39,12 @@ public class PayrollJdbcTest {
                 }
             }
 
-            // Asserting that the retrieved employee is not null
+            //asserting that the retrieved employee is not null
             assertNotNull(retrievedEmployee);
 
-            // Asserting that the attributes of the new employee match the retrieved employee
             assertEquals(newEmployee.getName(), retrievedEmployee.getName());
             assertEquals(newEmployee.getGender(), retrievedEmployee.getGender());
             assertEquals(newEmployee.getSalary(), retrievedEmployee.getSalary());
-            // Add more assertions for other attributes as needed
 
         } catch (SQLException | PayrollServiceException e) {
             e.printStackTrace();

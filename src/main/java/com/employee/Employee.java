@@ -65,20 +65,35 @@ public class Employee implements Serializable{
         return basic_pay;
     }
 
-    public String getDeductions() {
-        return deductions;
+    // public String getDeductions() {
+    //     return deductions;
+    // }
+
+    // public String getTaxPay() {
+    //     return tax_pay;
+    // }
+
+    // public String getIncomeTax() {
+    //     return income_tax;
+    // }
+
+    // public String getNetPay() {
+    //     return net_pay;
+    // }
+    public double getDeductions() {
+        return 0.20 * salary; // Assuming 20% deduction
     }
 
-    public String getTaxPay() {
-        return tax_pay;
+    public double getTaxPay() {
+        return salary - getDeductions();
     }
 
-    public String getIncomeTax() {
-        return income_tax;
+    public double getIncomeTax() {
+        return 0.10 * getTaxPay(); // Assuming 10% tax on taxable pay
     }
 
-    public String getNetPay() {
-        return net_pay;
+    public double getNetPay() {
+        return salary - getIncomeTax();
     }
 
     // Setter methods (assuming you need setters for these fields)
